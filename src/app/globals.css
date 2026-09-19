@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Theme tokens. Values are `R G B` triplets so Tailwind's <alpha-value> works.
+   Dark is the default/first-class experience; light is a tasteful fallback.
+--------------------------------------------------------------------------- */
+:root,
+.dark {
+  --bg: 8 11 22; /* deep navy */
+  --surface: 15 20 36;
+  --surface-2: 22 28 48;
+  --border: 38 46 72;
+  --fg: 226 232 245;
+  --muted: 148 160 189;
+  --accent: 124 92 255; /* violet */
+  --accent-soft: 88 66 190;
+}
+
+.light {
+  --bg: 247 248 251;
+  --surface: 255 255 255;
+  --surface-2: 240 242 248;
+  --border: 224 228 238;
+  --fg: 22 27 42;
+  --muted: 90 100 124;
+  --accent: 99 66 245;
+  --accent-soft: 168 150 250;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* offset for sticky nav when anchoring */
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--fg));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Focus ring for keyboard users. */
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar (subtle, dark-friendly). */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--surface-2));
+  border-radius: 8px;
+  border: 2px solid rgb(var(--bg));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--border));
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .section-eyebrow {
+    @apply mb-3 inline-block text-xs font-semibold uppercase tracking-[0.2em] text-accent;
+  }
+
+  .section-heading {
+    @apply text-3xl font-bold tracking-tight text-fg sm:text-4xl;
+  }
+
+  .card {
+    @apply rounded-2xl border border-border bg-surface;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent-soft;
+  }
+
+  .btn-outline {
+    @apply btn border border-border bg-surface-2 text-fg hover:border-accent hover:text-accent;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-border bg-surface-2 px-3 py-1 text-xs font-medium text-muted;
+  }
+
+  /* Horizontal scroll strip: single row, swipeable, with a slim scrollbar. */
+  .scroll-strip {
+    @apply flex gap-2 overflow-x-auto pb-2;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll-strip > * {
+    @apply shrink-0;
+  }
+  .scroll-strip::-webkit-scrollbar {
+    height: 6px;
+  }
+  .scroll-strip::-webkit-scrollbar-thumb {
+    background: rgb(var(--surface-2));
+    border-radius: 8px;
+  }
+  .scroll-strip::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--border));
+  }
+}
