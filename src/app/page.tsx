@@ -3,8 +3,8 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { Hero } from "@/components/sections/Hero";
-import { Metrics } from "@/components/sections/Metrics";
-import { About } from "@/components/sections/About";
+// import { Metrics } from "@/components/sections/Metrics";
+// import { About } from "@/components/sections/About";
 import { Experience } from "@/components/sections/Experience";
 import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
@@ -21,13 +21,13 @@ export default function HomePage() {
       <Navbar />
       <main id="main">
         <Hero />
-        <Metrics />
-        <About />
-        <Experience />
+        {/* <Metrics /> */}
+        {/* <About /> */}
         <Skills />
         <Projects />
         <SystemDesign />
         <OpenSource />
+        <Experience />
         <Certifications />
         <Education />
         <Contact />

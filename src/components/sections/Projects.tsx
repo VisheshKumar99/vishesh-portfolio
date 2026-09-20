@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { projects } from "@/data/projects";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { Marquee } from "@/components/ui/Marquee";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +31,7 @@ export function Projects() {
         <SectionHeading
           eyebrow="Featured Projects"
           title="Systems I've built"
-          description="Each project ships with an interactive architecture diagram — click the components to explore how the system works."
+          description="An auto-scrolling showcase — hover to pause, then open GitHub, the live demo, or the architecture in the System Design Playground."
         />
 
         {/* Project filtering by technology */}
@@ -47,21 +48,33 @@ export function Projects() {
             ))}
           </div>
         </Reveal>
-
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {visible.map((project, i) => (
-            <Reveal key={project.id} delay={(i % 2) * 0.08}>
-              <ProjectCard project={project} index={projects.indexOf(project)} />
-            </Reveal>
-          ))}
-        </div>
-
-        {visible.length === 0 ? (
-          <p className="mt-8 text-center text-muted">
-            No projects match that technology.
-          </p>
-        ) : null}
       </div>
+
+      {/* Full-bleed infinite slider (edge fade needs room outside the container). */}
+      {visible.length > 0 ? (
+        <Reveal className="mt-10">
+          {/* key forces a clean restart of the loop when the filter changes */}
+          <Marquee
+            key={filter}
+            durationSec={45}
+            pauseOnHover
+            ariaLabel="Featured projects"
+          >
+            {visible.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={projects.indexOf(project)}
+                compact
+              />
+            ))}
+          </Marquee>
+        </Reveal>
+      ) : (
+        <p className="container-page mt-8 text-center text-muted">
+          No projects match that technology.
+        </p>
+      )}
     </section>
   );
 }

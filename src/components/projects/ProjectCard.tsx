@@ -10,9 +10,15 @@ import { hasUrl } from "@/lib/utils";
 interface ProjectCardProps {
   project: Project;
   index: number;
+  /**
+   * Compact variant for the auto-scrolling slider: fixed width and the
+   * expandable architecture is replaced by a link to the System Design
+   * Playground (expand-in-place doesn't belong inside a moving track).
+   */
+  compact?: boolean;
 }
 
-export function ProjectCard({ project, index }: ProjectCardProps) {
+export function ProjectCard({ project, index, compact = false }: ProjectCardProps) {
   const reduce = useReducedMotion();
   const [showArch, setShowArch] = useState(false);
 
@@ -20,8 +26,14 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   const liveEnabled = hasUrl(project.liveUrl);
 
   return (
-    <article className="card overflow-hidden">
-      <div className="p-6 sm:p-7">
+    <article
+      className={
+        compact
+          ? "card flex h-full w-[340px] flex-col overflow-hidden sm:w-[380px]"
+          : "card overflow-hidden"
+      }
+    >
+      <div className={compact ? "flex flex-1 flex-col p-6 sm:p-7" : "p-6 sm:p-7"}>
         <div className="flex items-start justify-between gap-4">
           <span className="font-mono text-sm text-muted">
             {String(index + 1).padStart(2, "0")}
@@ -42,12 +54,14 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
         {/* Highlights / key engineering challenges */}
         <ul className="mt-4 space-y-1.5">
-          {project.highlights.map((h) => (
-            <li key={h} className="flex gap-2 text-sm text-muted">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-              <span>{h}</span>
-            </li>
-          ))}
+          {(compact ? project.highlights.slice(0, 3) : project.highlights).map(
+            (h) => (
+              <li key={h} className="flex gap-2 text-sm text-muted">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span>{h}</span>
+              </li>
+            ),
+          )}
         </ul>
 
         {/* Technologies */}
@@ -60,7 +74,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         </ul>
 
         {/* Actions */}
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className={`flex flex-wrap gap-2 ${compact ? "mt-auto pt-4" : "mt-6"}`}>
           <a
             href={githubEnabled ? project.githubUrl : undefined}
             aria-disabled={!githubEnabled}
@@ -85,20 +99,27 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             <ExternalLink className="h-4 w-4" aria-hidden="true" />
             Live Demo
           </a>
-          <button
-            type="button"
-            onClick={() => setShowArch((s) => !s)}
-            aria-expanded={showArch}
-            className="btn-primary text-xs"
-          >
-            <Network className="h-4 w-4" aria-hidden="true" />
-            {showArch ? "Hide Architecture" : "View Architecture"}
-          </button>
+          {compact ? (
+            <a href="#system-design" className="btn-primary text-xs">
+              <Network className="h-4 w-4" aria-hidden="true" />
+              View Architecture
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowArch((s) => !s)}
+              aria-expanded={showArch}
+              className="btn-primary text-xs"
+            >
+              <Network className="h-4 w-4" aria-hidden="true" />
+              {showArch ? "Hide Architecture" : "View Architecture"}
+            </button>
+          )}
         </div>
       </div>
 
       <AnimatePresence initial={false}>
-        {showArch ? (
+        {!compact && showArch ? (
           <motion.div
             initial={reduce ? false : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
