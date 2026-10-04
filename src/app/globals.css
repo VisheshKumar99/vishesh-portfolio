@@ -38,11 +38,40 @@ html {
   scroll-padding-top: 5rem; /* offset for sticky nav when anchoring */
 }
 
+/* Global guard against horizontal overflow. A single too-wide child (an
+   animated element, a wide grid, or a long unbroken string) can otherwise
+   push the whole page sideways on small screens. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: rgb(var(--bg));
   color: rgb(var(--fg));
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Media and embedded content should never exceed their container. */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent long unbroken tokens (URLs, code, emails) from forcing overflow. */
+p,
+li,
+dd,
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
 }
 
 /* Respect users who prefer reduced motion. */

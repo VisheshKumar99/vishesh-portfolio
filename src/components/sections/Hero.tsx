@@ -41,7 +41,7 @@ export function Hero() {
       <AuroraBackground />
 
       <div className="container-page grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-        <motion.div variants={container} initial="hidden" animate="show">
+        <motion.div variants={container} initial="hidden" animate="show" className="min-w-0">
           <motion.span
             variants={item}
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent"
