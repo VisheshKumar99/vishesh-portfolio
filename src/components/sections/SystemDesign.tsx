@@ -21,10 +21,10 @@ export function SystemDesign() {
           description="Pick a system, then click any node to see its responsibility, why it exists, data flow, scaling and failure handling."
         />
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[280px_1fr]">
+        <div className="mt-10 grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
           {/* Scenario selector */}
-          <Reveal>
-            <ul className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
+          <Reveal className="min-w-0">
+            <ul className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible">
               {systemDesignScenarios.map((s) => {
                 const isActive = s.id === activeId;
                 return (
@@ -56,8 +56,8 @@ export function SystemDesign() {
           </Reveal>
 
           {/* Active scenario */}
-          <Reveal delay={0.1}>
-            <div className="card p-6">
+          <Reveal delay={0.1} className="min-w-0">
+            <div className="card min-w-0 p-6">
               <p className="mb-4 text-sm text-muted">{active.summary}</p>
               <ArchitectureDiagram flow={active.architecture} />
             </div>

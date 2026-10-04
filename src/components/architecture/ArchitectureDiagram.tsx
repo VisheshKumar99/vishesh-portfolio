@@ -31,7 +31,7 @@ export function ArchitectureDiagram({
   const isHorizontal = orientation === "horizontal";
 
   return (
-    <div className="rounded-xl border border-border bg-surface-2/50 p-4 sm:p-5">
+    <div className="min-w-0 rounded-xl border border-border bg-surface-2/50 p-4 sm:p-5">
       <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
         {flow.title}
       </p>
@@ -95,7 +95,7 @@ export function ArchitectureDiagram({
             className="mt-4 rounded-lg border border-border bg-surface p-4"
           >
             <p className="mb-2 text-sm font-semibold text-accent">{selected.label}</p>
-            <dl className="grid gap-2 sm:grid-cols-2">
+            <dl className="grid gap-2 sm:grid-cols-2 [&_dd]:break-words">
               {detailFields.map(({ key, label }) => {
                 const val = selected[key];
                 if (!val || key === "id" || key === "label") return null;
