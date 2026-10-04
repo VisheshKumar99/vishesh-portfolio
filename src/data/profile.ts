@@ -28,12 +28,19 @@ export const profile: Profile = {
   social: {
     email: "visheshmzn99@gmail.com",
     phone: "8954161886",
-    // TODO: fill in with the real profile URLs. Left blank on purpose so no
-    // fabricated links ship to production.
     github: "https://github.com/VisheshKumar99",
     linkedin: "https://www.linkedin.com/in/visheshkumar99/",
     leetcode: "https://leetcode.com/u/visheshmzn99/",
+    youtube: "https://www.youtube.com/@8pm-magic/shorts",
   },
+  // Short-form videos from the @8pm-magic channel.
+  featuredVideos: [
+    {
+      id: "wkU-ofpzAO8",
+      title: "8PM Magic — Short",
+      url: "https://www.youtube.com/shorts/wkU-ofpzAO8",
+    },
+  ],
 };
 
 // Metrics — every value is grounded in the resume. Do not add fabricated ones.

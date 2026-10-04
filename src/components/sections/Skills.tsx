@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Marquee } from "@/components/ui/Marquee";
-import { cn } from "@/lib/utils";
+import { cn, hueAt } from "@/lib/utils";
 
 const ALL = "all";
 
@@ -63,7 +63,11 @@ export function Skills() {
       <Reveal className="mt-10 space-y-4">
         <Marquee key={`${active}-1`} durationSec={38} ariaLabel="Skill categories">
           {rowOne.map((cat) => (
-            <SkillCard key={cat.id} category={cat} />
+            <SkillCard
+              key={cat.id}
+              category={cat}
+              hueIndex={skillCategories.indexOf(cat)}
+            />
           ))}
         </Marquee>
 
@@ -75,7 +79,11 @@ export function Skills() {
             ariaLabel="More skill categories"
           >
             {rowTwo.map((cat) => (
-              <SkillCard key={cat.id} category={cat} />
+              <SkillCard
+                key={cat.id}
+                category={cat}
+                hueIndex={skillCategories.indexOf(cat)}
+              />
             ))}
           </Marquee>
         ) : null}
@@ -84,11 +92,22 @@ export function Skills() {
   );
 }
 
-function SkillCard({ category }: { category: SkillCategory }) {
+function SkillCard({
+  category,
+  hueIndex,
+}: {
+  category: SkillCategory;
+  hueIndex: number;
+}) {
+  const hue = hueAt(hueIndex);
   return (
-    <div className="card h-full w-[300px] p-5 sm:w-[340px]">
+    <div
+      className={`card h-full w-[300px] p-5 transition-all duration-200 hover:-translate-y-1 sm:w-[340px] ${hue.ring}`}
+    >
       <div className="mb-4 flex items-center gap-3">
-        <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent/15 text-accent">
+        <span
+          className={`grid h-9 w-9 place-items-center rounded-lg ${hue.chip}`}
+        >
           <Icon name={category.icon} className="h-4 w-4" />
         </span>
         <h3 className="font-semibold text-fg">{category.name}</h3>

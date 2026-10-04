@@ -4,7 +4,17 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Download, Github } from "lucide-react";
 import { profile } from "@/data/profile";
 import { SocialLinks } from "@/components/ui/SocialLinks";
+import { AuroraBackground } from "@/components/ui/AuroraBackground";
 import { hasUrl } from "@/lib/utils";
+
+// Rotating accent hues for the hero tech badges — adds color without noise.
+const badgeHues = [
+  "border-[#7c5cff]/40 text-[#a992ff]",
+  "border-[#22d3ee]/40 text-[#5fe0f0]",
+  "border-[#34d399]/40 text-[#6ee7b7]",
+  "border-[#f59e0b]/40 text-[#fbbf24]",
+  "border-[#f472b6]/40 text-[#f9a8d4]",
+];
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -27,18 +37,19 @@ export function Hero() {
 
   return (
     <section id="home" className="relative overflow-hidden pt-28 pb-16 sm:pt-32">
-      {/* Subtle radial glow behind hero — restrained, not gaming-style. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-32 right-0 h-[500px] w-[500px] rounded-full bg-accent/10 blur-[120px]"
-      />
+      {/* Animated, cursor-reactive aurora backdrop. */}
+      <AuroraBackground />
 
       <div className="container-page grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <motion.div variants={container} initial="hidden" animate="show">
           <motion.span
             variants={item}
-            className="mb-5 inline-flex items-center rounded-full border border-border bg-surface-2 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent"
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent"
           >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
             Senior Software Engineer
           </motion.span>
 
@@ -46,7 +57,7 @@ export function Hero() {
             variants={item}
             className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl"
           >
-            Hi, I&apos;m <span className="text-accent">Vishesh Kumar</span>
+            Hi, I&apos;m <span className="gradient-text">Vishesh Kumar</span>
             <span className="mt-2 block text-fg">
               I build scalable distributed systems.
             </span>
@@ -106,7 +117,10 @@ export function Hero() {
                   initial={reduce ? false : { opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 + i * 0.05, duration: 0.3 }}
-                  className="chip font-mono"
+                  whileHover={reduce ? undefined : { y: -3 }}
+                  className={`chip bg-surface-2/60 font-mono transition-colors ${
+                    badgeHues[i % badgeHues.length]
+                  }`}
                 >
                   {badge}
                 </motion.li>
@@ -127,7 +141,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative hidden lg:block"
         >
-          <div className="rounded-2xl border border-border bg-surface shadow-2xl shadow-black/30">
+          <div className="gradient-ring shadow-2xl shadow-black/30">
+          <div className="rounded-2xl bg-surface">
             <div className="flex items-center gap-2 border-b border-border px-4 py-3">
               <span className="h-3 w-3 rounded-full bg-red-400/70" />
               <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
@@ -167,6 +182,7 @@ export function Hero() {
                 {"}"}
               </code>
             </pre>
+          </div>
           </div>
         </motion.div>
       </div>

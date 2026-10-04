@@ -7,7 +7,16 @@ export interface SocialLinks {
   linkedin: string;
   email: string;
   leetcode: string;
+  youtube: string;
   phone?: string;
+}
+
+/** A short-form video to feature in the "Beyond Code" section. */
+export interface FeaturedVideo {
+  /** YouTube video id (the part after /shorts/ or ?v=). */
+  id: string;
+  title: string;
+  url: string;
 }
 
 export interface Profile {
@@ -21,6 +30,8 @@ export interface Profile {
   resumeUrl: string;
   heroBadges: string[];
   social: SocialLinks;
+  /** Optional short-form videos featured in the "Beyond Code" section. */
+  featuredVideos?: FeaturedVideo[];
 }
 
 export interface Metric {

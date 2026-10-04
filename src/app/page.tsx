@@ -10,6 +10,7 @@ import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
 import { SystemDesign } from "@/components/sections/SystemDesign";
 import { OpenSource } from "@/components/sections/OpenSource";
+import { BeyondCode } from "@/components/sections/BeyondCode";
 import { Certifications } from "@/components/sections/Certifications";
 import { Education } from "@/components/sections/Education";
 import { Contact } from "@/components/sections/Contact";
@@ -27,6 +28,7 @@ export default function HomePage() {
         <Projects />
         <SystemDesign />
         <OpenSource />
+        <BeyondCode />
         <Experience />
         <Certifications />
         <Education />

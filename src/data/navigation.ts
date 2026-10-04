@@ -6,7 +6,6 @@ export interface NavLink {
 // Section ids double as scroll anchors and active-nav observer targets.
 export const navLinks: NavLink[] = [
   { id: "home", label: "Home" },
-  { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
